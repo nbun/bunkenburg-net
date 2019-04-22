@@ -1,9 +1,8 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Control.Applicative
+import           Data.Monoid         (mappend)
 import           Hakyll
-import 			 Control.Applicative
-
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -12,37 +11,65 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
+    match "photos/**" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match "fonts/**" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
 
-    match (fromList ["about.md"]) $ do
+    match (fromList ["contact.md", "about.md", "papers.md"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" siteCtx
             >>= relativizeUrls
-
-    match "portfolio/*" $ do
+            
+    match "projects/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    create ["archive.html"] $ do
+    match "photography/*" $ do
+        route $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/post.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+    create ["projects.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "portfolio/*"
+            posts <- recentFirst =<< loadAll "projects/*"
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Archives"            `mappend`
                     siteCtx
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/projects.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
+    create ["photography.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll "photography/*"
+            let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "Archives"            `mappend`
+                    siteCtx
+
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/photography.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= relativizeUrls
 
     match "index.html" $ do
         route idRoute
@@ -60,7 +87,6 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateCompiler
 
-
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
@@ -68,12 +94,12 @@ postCtx =
     siteCtx
 
 siteCtx :: Context String
-siteCtx = 
-	activeClassField `mappend`
-	defaultContext
+siteCtx =
+    activeClassField `mappend`
+    defaultContext
 
--- https://groups.google.com/forum/#!searchin/hakyll/if$20class/hakyll/WGDYRa3Xg-w/nMJZ4KT8OZUJ 
-activeClassField :: Context a 
-activeClassField = functionField "activeClass" $ \[p] _ -> do 
-	path <- toFilePath <$> getUnderlying 
-	return $ if path == p then "active" else path 
+-- https://groups.google.com/forum/#!searchin/hakyll/if$20class/hakyll/WGDYRa3Xg-w/nMJZ4KT8OZUJ
+activeClassField :: Context a
+activeClassField = functionField "activeClass" $ \[p] _ -> do
+    path <- toFilePath <$> getUnderlying
+    return $ if path == p then "active" else path
