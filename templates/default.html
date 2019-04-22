@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="author" content="@katychuang" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
         <meta http-equiv="Cache-Control" content="max-age=86400, must-revalidate" />
         <title>bunkenburg.net</title>
         <link rel="stylesheet" type="text/css" title="hakyll_theme" href="/css/theprofessional.css" />
@@ -15,37 +13,47 @@
     </head>
     <body>
         <div id="header">
-          <div class="box">
-            <div id="logo" class="name">
-              <h2><a href="/">Niels Bunkenburg</a></h2>
-            </div>
-            <div id="navigation" class="pageslinks">
-              <nav class="menuNav">
-                <div class="menuItems">
-                <a href="/" class="$activeClass("index.html")$">Home</a>
-                <a href="/contact.html" class="$activeClass("contact.md")$">Contact</a>
-                <a href="/papers.html"  class="$activeClass("papers.md")$">Scientific Writing</a>
-                <a href="/projects.html"  class="$activeClass("projects.html")$">Projects</a>
-                <a href="/photography.html" class="$activeClass("photography.html")$">Photography</a>
+            <div class="box">
+                <div id="logo" class="name">
+                    <h2><a href="/">Niels Bunkenburg</a></h2>
                 </div>
-              </nav>
+                <div class="topnav" id="myTopnav">
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <i class="typcn typcn-th-menu"></i>
+                    </a>
+                    <a href="/" class="$activeClass("index.html")$">Home</a>
+                    <a href="/contact.html" class="$activeClass("contact.md")$">Contact</a>
+                    <a href="/papers.html"  class="$activeClass("papers.md")$">Scientific Writing</a>
+                    <a href="/projects.html"  class="$activeClass("projects.html")$">Projects</a>
+                    <a href="/photography.html" class="$activeClass("photography.html")$">Photography</a>
+                </div>
             </div>
-        </div>
         </div>
         <div class="container-gallery">
-        <div id="content" class="inside">
-            $body$
-        </div>
-        </div>
-        <div id="footer">
-          <div class="inside">
-            <div>  
-              <a href="/contact.html"><span class="typcn typcn-mail"></span></a>
-              <a href="https://github.com/nbun"><span class="typcn typcn-social-github"></span></a>
-              <a href="https://twitter.com/nibburg"><span class="typcn typcn-social-twitter"></span></a>
-              <a href="about.html"><span class="typcn typcn-info-large"></span></a>
+            <div id="content" class="inside">
+                $body$
             </div>
-          </div>
         </div>
+        <div class="spacer"></div>
+        <div id="footer">
+            <div class="inside">
+                <div>
+                    <a href="/contact.html"><span class="typcn typcn-mail"></span></a>
+                    <a href="https://github.com/nbun"><span class="typcn typcn-social-github"></span></a>
+                    <a href="https://twitter.com/nibburg"><span class="typcn typcn-social-twitter"></span></a>
+                    <a href="about.html"><span class="typcn typcn-info-large"></span></a>
+                </div>
+            </div>
+        </div>
+        <script>
+         function myFunction() {
+             var x = document.getElementById("myTopnav");
+             if (x.className === "topnav") {
+                 x.className += " responsive";
+             } else {
+                 x.className = "topnav";
+             }
+         }
+        </script>
     </body>
 </html>
