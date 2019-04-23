@@ -28,7 +28,7 @@ main = hakyll $ do
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" siteCtx
             >>= relativizeUrls
-            
+
     match "projects/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
