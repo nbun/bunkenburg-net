@@ -20,7 +20,7 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/defaultNoHeading.html" siteCtx
             >>= relativizeUrls
 
-    match (fromList ["index.md", "contact.md", "about.md", "papers.md"]) $ do
+    match (fromList ["contact.md", "about.md", "papers.md"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" siteCtx
