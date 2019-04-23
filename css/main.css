@@ -1,4 +1,4 @@
-@import url(/fonts/fira/fira.css);
+@import url(/css/fira.css);
 
 html,body {
   height: 100%;
@@ -83,6 +83,7 @@ a img {
   padding-right: 10px;
   padding-left: 10px;
   text-decoration: none;
+  outline: none;
   font-size: 14px;
 }
 

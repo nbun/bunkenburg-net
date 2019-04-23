@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Cache-Control" content="max-age=86400, must-revalidate" />
         <title>bunkenburg.net</title>
-        <link rel="stylesheet" type="text/css" title="hakyll_theme" href="/css/theprofessional.css" />
+        <link rel="stylesheet" type="text/css" title="hakyll_theme" href="/css/main.css" />
         <link rel='stylesheet' href='css/typicons.css' />
     </head>
     <body>
@@ -21,7 +21,7 @@
                     <h2 id="h2name"><a href="/">Niels Bunkenburg</a></h2>
                 </div>
                 <div class="topnav" id="myTopnav">
-                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <a href="javascript:void(0);" class="icon" onclick="toggleResponsive()">
                         <i class="typcn typcn-th-menu"></i>
                     </a>
                     <a href="/" class="$activeClass("index.html")$">Home</a>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <script>
-         function myFunction() {
+         function toggleResponsive() {
              var x = document.getElementById("myTopnav");
              if (x.className === "topnav") {
                  x.className += " responsive";
