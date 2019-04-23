@@ -115,6 +115,10 @@ a img {
     display: block;
     padding-top: 0;
   }
+
+  .spacer {
+      flex: 1;
+  }
 }
 
 @media screen and (max-width:700px) {
@@ -158,10 +162,6 @@ a img {
 #h2name {
   float: right;
   padding-top: 5px;
-}
-
-.spacer {
-  flex: 1;
 }
 
 .container-gallery {
