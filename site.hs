@@ -1,21 +1,12 @@
---------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Control.Applicative
+import           Data.Char           (toUpper)
 import           Data.Monoid         (mappend)
 import           Hakyll
 
---------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    match "images/*" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-    match "photos/**" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-    match "fonts/**" $ do
+    match ("images/*" .||. "photos/**" .||. "fonts/**") $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -23,71 +14,48 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match (fromList ["contact.md", "about.md", "papers.md"]) $ do
+    match "index.md" $ do
+        route   $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/defaultNoHeading.html" siteCtx
+            >>= relativizeUrls
+
+    match (fromList ["index.md", "contact.md", "about.md", "papers.md"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" siteCtx
             >>= relativizeUrls
 
-    match "projects/*" $ do
+    match ("photography/*" .||. "projects/*") $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    match "photography/*" $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
-
-    create ["projects.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "projects/*"
+    let overview s = do
+          route idRoute
+          compile $ do
+            posts <- recentFirst =<< loadAll (fromGlob $ s ++ "/*")
             let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
-                    siteCtx
+                  listField "posts" postCtx (return posts) `mappend`
+                  constField "title" (capitalize s)        `mappend`
+                  siteCtx
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/projects.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
+              >>= loadAndApplyTemplate (fromFilePath $ "templates/" ++ s ++ ".html") archiveCtx
+              >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+              >>= relativizeUrls
 
-    create ["photography.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "photography/*"
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
-                    siteCtx
-
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/photography.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
-
-    match "index.html" $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "portfolio/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
-                    siteCtx
-
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
+    create ["projects.html"] $ overview "projects"
+    create ["photography.html"] $ overview "photography"
 
     match "templates/*" $ compile templateCompiler
 
---------------------------------------------------------------------------------
+capitalize :: String -> String
+capitalize []    = []
+capitalize (c:s) = toUpper c : s
+
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`

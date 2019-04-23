@@ -16,8 +16,12 @@ body {
   flex-direction: column;
 }
 
-h1,h2,h3,h4,h5,h6,p {
-  margin: 1em 0;
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+    font-size: 20px;
 }
 
 a img {
@@ -56,7 +60,7 @@ a img {
 #logoimg {
     height: 50px;
     width: 50px;
-    padding: 14px 10px 0 0;
+    padding: 8px 10px 0 0;
 }
 
 #header .box {
@@ -69,9 +73,8 @@ a img {
 .topnav {
   overflow: hidden;
   padding-right: 20px;
-  padding-top: 30px;
+  padding-top: 15px;
   float: right;
-  margin-bottom: 10px;
 }
 
 .topnav a {
@@ -124,7 +127,7 @@ a img {
   .topnav.responsive .icon {
     position: absolute;
     right: 1.35%;
-    top: -46%;
+    top: -37.5%;
   }
 
   .topnav.responsive a {
@@ -154,6 +157,7 @@ a img {
 
 #h2name {
   float: right;
+  padding-top: 5px;
 }
 
 .spacer {
@@ -170,7 +174,7 @@ a img {
 
 .container-gallery .inside,.container-gallery>header {
   margin: 0 auto;
-  padding: 5%;
+  padding: 0 5%;
 }
 
 .container-gallery>header>span span:after {

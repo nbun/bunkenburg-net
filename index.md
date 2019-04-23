@@ -14,5 +14,5 @@ title: Home
 
 <p>Besides programming, I enjoy tinkering with all sorts of electronics. Microprocessors? Great. Combined with motors? Even better. A 250°C hotend strapped to it? Awesome! <br>
    3D printing and CAD are my favorite activities when I feel like designing a useful or decorative object. Need anything 3D printed? I can probably help! </p>
-   
+
 <p>I like to take my camera with me while exploring the world. Feel free to have a look at some of my favorite photos <a href="photography.html">here</a>.<p>
